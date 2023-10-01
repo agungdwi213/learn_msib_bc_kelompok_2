@@ -6,11 +6,11 @@ class Block{
         this.data = data;
         this.hash = this.getHash();
         this.prevHash ="";
-        this.nonce =0;
+        this.nonce = 0;
     }
 
     getHash(){
-        return SHA256(JSON.stringify(this.data) + this.timestamp + this.prevHash); 
+        return SHA256(JSON.stringify(this.data) + this.timestamp + this.prevHash + this.nonce ); 
     }
     mine(difficulty){
         while(!this.hash.startsWith(Array(difficulty + 1).join("0"))){
@@ -36,7 +36,7 @@ class Blockchain {
  
         block.mine(this.difficulty);
         
-        this.difficulty += Date.now() - parseInt(this.getLastBlock().timestamp) < this.blocktime ? 1 : -1;
+        this.difficulty += Date.now() - parseInt(this.getLastBlock().timestamp) < this.blockTime ? 1 : -1;
 
         this.chain.push(block);
     }
